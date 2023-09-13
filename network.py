@@ -14,6 +14,7 @@ class Network(object):
     def feedforward(self, a):
         for b, w in zip(self.biases, self.weights):
             a = sigmoid(np.dot(w, a)+b)
+            a[-1] = self.softmax(a[-1])
         return a
 
     def SGD(self, training_data, epochs, mini_batch_size, eta,
@@ -93,6 +94,10 @@ class Network(object):
     # cambiando la función de costo por categorical cross entropy
     def cross_entropy(self, output_activations, y):
         return -1/len(y) * np.sum(y * np.log(output_activations))
+    
+    # intento aplicar soft-max
+    def softmax(self, z):
+        return np.exp(z) / np.sum(np.exp(z))
 
 def sigmoid(z):
     return 1.0/(1.0+np.exp(-z))
