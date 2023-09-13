@@ -68,8 +68,8 @@ class Network(object):
             activation = sigmoid(z)
             activations.append(activation)
         # backward pass
-        delta = self.cost_derivative(activations[-1], y) * \
-            sigmoid_prime(zs[-1])
+        delta = self.cross_entropy(activations[-1], y) * \
+            sigmoid_prime(zs[-1])           # cambiando self.cost_derivative por self.cross_entropy
         nabla_b[-1] = delta
         nabla_w[-1] = np.dot(delta, activations[-2].transpose())
         for l in range(2, self.num_layers):
@@ -85,8 +85,14 @@ class Network(object):
                         for (x, y) in test_data]
         return sum(int(x == y) for (x, y) in test_results)
 
+    '''
     def cost_derivative(self, output_activations, y):
         return (output_activations-y)
+    '''
+
+    # cambiando la función de costo por categorical cross entropy
+    def cross_entropy(self, output_activations, y):
+        return -1/len(y) * np.sum(y * np.log(output_activations))
 
 def sigmoid(z):
     return 1.0/(1.0+np.exp(-z))
