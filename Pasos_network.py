@@ -20,4 +20,4 @@ SGD:
     10 mini-batch size
     3.0 tasa de aprendizaje
 '''
-net.SGD(training_data, 30, 10, 20.0, test_data=test_data)
+net.SGD(training_data, 30, 10, 0.10, test_data=test_data)
